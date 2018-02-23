@@ -1,0 +1,19 @@
+.svn/
+.data/
+.DS_Store
+target/
+classes/
+temp/
+logs/
+*.log
+~$*
+
+# IDEA Files
+*.iml
+.idea/
+
+# Eclipse Files
+.classpath
+.project
+.settings/
+.springBeans
