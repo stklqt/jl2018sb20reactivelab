@@ -16,8 +16,8 @@ Take a look at the generated pom file to see the added dependencies.
 4. Copy the Cassandra distribution archive from `tools/apache-cassandra-3.11.1-bin.tar.gz`, unarchive it and
 start it by executing `bin/cassandra`. Make sure it's up and running before starting the CQL client with `bin/cqlsh`:
      - Execute `describe keyspaces` command to see what keyspaces there are;
-     - After starting the application for the first time you will be able to see your own keyspace listed;
-     - With `use your_keyspace_name` you can switch to your keyspace and consequently run CQL commands against it;
+     - After starting the application for the first time you will be able to see or create your own keyspace listed;
+     - With `use your_keyspace_name` you can switch to your created keyspace and consequently run CQL commands against it;
 
 ## 2. Explore the project
 

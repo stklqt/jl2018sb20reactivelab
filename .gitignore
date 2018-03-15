@@ -17,3 +17,6 @@ logs/
 .project
 .settings/
 .springBeans
+
+# Other
+tools/apache-cassandra-3.11.1/

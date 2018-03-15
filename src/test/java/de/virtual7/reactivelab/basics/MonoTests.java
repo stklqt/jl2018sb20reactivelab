@@ -14,7 +14,9 @@ public class MonoTests {
 
     @Test
     public void testCreateVoidMono() {
-        //TODO: create an empty Mono
+        Mono<Object> voidMono = Mono.empty();
+        System.out.println(voidMono.log());
+        voidMono.subscribe();
     }
 
     @Test
