@@ -5,9 +5,13 @@ import org.springframework.util.Assert;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.stream.Stream;
+
+import static java.util.Arrays.asList;
 
 /**
  * Created by mihai.dobrescu
@@ -22,7 +26,7 @@ public class FluxTests {
 
     @Test
     public void testCreateFluxFromList() {
-        List<String> list = Arrays.asList("aaa", "bbb", "ccc");
+        List<String> list = asList("aaa", "bbb", "ccc");
 //        Flux<List<String>> listFlux = Flux.just(list); //FIXME, falsch wäre Flux mit Monos
         Flux<String> listFlux = Flux.fromIterable(list);
 
@@ -31,7 +35,7 @@ public class FluxTests {
 
     @Test
     public void testFluxCountElements() {
-        List<String> list = Arrays.asList("aaa", "bbb", "ccc", "dddd");
+        List<String> list = asList("aaa", "bbb", "ccc", "dddd");
         Flux<String> listFlux = Flux.fromIterable(list);
 
         Mono<Long> count = listFlux.count();
@@ -68,28 +72,40 @@ public class FluxTests {
 
     @Test
     public void testCreateFluxUsingInterval() throws InterruptedException {
-        //TODO: create a Flux using Flux.interval()
+        CountDownLatch cdl = new CountDownLatch(1);
+
+        Flux.interval(Duration.ofSeconds(1))
+                .take(2)
+                .doOnComplete(cdl::countDown)
+                .subscribe(value -> System.out.println(value));
+
+        cdl.await();
+
     }
 
     @Test
     public void testCreateFluxFromStream() {
-        //TODO: create a Flux using Flux.fromStream()
+        Flux.fromStream(Stream.of( "a", "b", "c")).log().subscribe(System.out::println);
     }
 
     @Test
     public void testZipThem() throws InterruptedException {
-        //TODO: create two Flux instances, one using fromStream() one using .interval with the duration of a second
+        Flux.fromStream(Stream.of(5, 3, 3))
+                .zipWith(Flux.interval(Duration.ofSeconds(1)))
+                .subscribe(System.out::println);
+        Thread.sleep(5000);
         //zip them and observe the results
     }
 
     @Test
     public void testSwitchIfEmpty() {
-        //TODO: create a Flux instance of your choice and make sure it's empty. Call the switchIfEmpty method on it to supply a fallback
+        Flux.empty().switchIfEmpty(Flux.fromIterable(asList("a", "b"))).subscribe(System.out::println);
     }
 
     @Test
     public void testHandleAndSkipNulls() {
         //TODO: create a Flux using just and for each value call a method which could return a null
+//        Flux.just("a", "b", null, "c");
         //use handle() to filter out the nulls
     }
 
