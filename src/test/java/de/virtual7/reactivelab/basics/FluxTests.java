@@ -1,6 +1,13 @@
 package de.virtual7.reactivelab.basics;
 
 import org.junit.Test;
+import org.springframework.util.Assert;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by mihai.dobrescu
@@ -9,27 +16,54 @@ public class FluxTests {
 
     @Test
     public void testCreateFluxJust() {
-        //TODO: create a Flux using Flux.just
+        Flux<String> stringFlux = Flux.just("aaa", "bbb", "ccc");
+        stringFlux.log().subscribe(System.out::println);
     }
 
     @Test
     public void testCreateFluxFromList() {
-        //TODO: create a Flux from a List
+        List<String> list = Arrays.asList("aaa", "bbb", "ccc");
+//        Flux<List<String>> listFlux = Flux.just(list); //FIXME, falsch wäre Flux mit Monos
+        Flux<String> listFlux = Flux.fromIterable(list);
+
+        listFlux.log().subscribe(System.out::println);
     }
 
     @Test
     public void testFluxCountElements() {
-        //TODO: count the elements from a flux
+        List<String> list = Arrays.asList("aaa", "bbb", "ccc", "dddd");
+        Flux<String> listFlux = Flux.fromIterable(list);
+
+        Mono<Long> count = listFlux.count();
+        count.log().subscribe(System.out::println);
+
+        //Achtung bei Inline, .mit count ist man u.u. aus dem Stream heraus
     }
 
     @Test
     public void testFluxRange() {
-        //TODO: create a Flux using the .range operator. Possible usecases?
+        Flux<Integer> rangeFlux = Flux.range(21, 22); //von 21 bis 42 :-)
+        rangeFlux.log().subscribe(System.out::println);
+
     }
 
     @Test
     public void testCreateFluxUsingGenerate() throws InterruptedException {
-        //TODO: create a Flux using Flux.generate()
+        Flux<Object> generate = Flux.generate(
+                () -> 0,
+                (state, sink) -> {
+                    sink.next(state);
+                    if(state == 1000) {
+                        sink.complete();
+                    }
+                    return state + 1;
+                }
+
+        );
+        CountDownLatch cdl = new CountDownLatch(1);
+        generate.doOnComplete(cdl::countDown).subscribe(System.out::println);
+
+        cdl.await();
     }
 
     @Test
