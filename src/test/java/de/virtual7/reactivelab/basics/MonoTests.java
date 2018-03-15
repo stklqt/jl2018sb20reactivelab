@@ -3,6 +3,7 @@ package de.virtual7.reactivelab.basics;
 import org.junit.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -15,8 +16,8 @@ public class MonoTests {
     @Test
     public void testCreateVoidMono() {
         Mono<Object> voidMono = Mono.empty();
-        System.out.println(voidMono.log());
-        voidMono.subscribe();
+        voidMono.log().subscribe(System.out::println);
+
     }
 
     @Test
