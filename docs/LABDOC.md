@@ -41,7 +41,7 @@ start it by executing `bin/cassandra`. Make sure it's up and running before star
     - `testCreateFluxFromMono`: Convert a `Mono` to a `Flux`. Let's suppose we read a list of strings from a non-reactive source, e.g a non-reactive REST-Service or a database.
       - Step 1. Create an instance of `List<String>`
       - Step 2. Convert it to a `Mono` using `Mono.just()`
-      - Step 3. Convert the freshly created `Mono` instance to a `Flux` using `mono.flatMapToMany(Flux::fromIterable)`. Subscribe to it by calling `.subscribe(System.out::println)`
+      - Step 3. Convert the freshly created `Mono` instance to a `Flux` using `mono.flatMapMany(Flux::fromIterable)`. Subscribe to it by calling `.subscribe(System.out::println)`
     - `testMergeMonos`: Merge two `Mono` instances
     - `testZipMonos`: Zip two Monos, what do you get back ? How many Monos can you zip together?
     - `testBlockingMono`: What would be the use of Mono.block ? Write a test to show its possible usage.
