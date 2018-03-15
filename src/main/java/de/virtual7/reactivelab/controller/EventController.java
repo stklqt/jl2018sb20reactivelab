@@ -38,7 +38,7 @@ public class EventController {
     public Flux<TrackingEvent> getEventsLatest() {
         logger.info("getEventsLatest() called!");
 
-        return Flux.range(0, 100).log()
+        return Flux.range(0, 100) // .log() //TODO loggen optional
                 .map(i -> new TrackingEvent(Long.valueOf(i), TrackingEventType.getRandomType(),
                 BigDecimal.TEN, Instant.now()));
 
