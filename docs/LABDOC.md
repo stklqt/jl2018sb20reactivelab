@@ -15,9 +15,9 @@ Take a look at the generated pom file to see the added dependencies.
 
 4. Copy the Cassandra distribution archive from `tools/apache-cassandra-3.11.1-bin.tar.gz`, unarchive it and
 start it by executing `bin/cassandra`. Make sure it's up and running before starting the CQL client with `bin/cqlsh`:
-     - Execute `describe keyspaces` command to see what keyspaces there are;
+     - Execute `describe keyspaces;` command to see what keyspaces there are;
      - After starting the application for the first time you will be able to see or create your own keyspace listed;
-     - With `use your_keyspace_name` you can switch to your created keyspace and consequently run CQL commands against it;
+     - With `use your_keyspace_name;` you can switch to your created keyspace and consequently run CQL commands against it;
 
 ## 2. Explore the project
 
@@ -127,7 +127,7 @@ start it by executing `bin/cassandra`. Make sure it's up and running before star
           return Collections.singletonList(specification);
   ```
   - Start the CQL client from your Cassandra installation folder `bin/cqlsh` and issue again the command `describe keyspaces`, you should see your newly created keyspace there.
-  - You could also try to explore the keyspace by typing `use reactive_lab` to switch to it and then `describe tables`
+  - You could also try to explore the keyspace by typing `use reactive_lab;` to switch to it and then `describe tables;`
   - Now that we have the database set up we can go on implementing the business logic of our application. Let's create a controller and try to get the events from our publisher. Create
   or use the provided `de.virtual7.reactivelabclient.controller.ClientEventController` class and add a method `@GetMapping("/events") public String getTrackingEvents()`. We'll use for the
   moment String as a return type.
